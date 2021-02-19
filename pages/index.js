@@ -22,11 +22,11 @@ export default function Home() {
         <div className={styles.description}>
           <p>
             Provide your world database if you're having trouble locating
-            vendors of fine goods.
+            Haldor, the vendor of fine goods.
           </p>
           <ol className={styles.ol}>
             <li>Data stays offline</li>
-            <li>Roleplay-friendly directions to the nearest trader</li>
+            <li>Roleplay-friendly directions to the nearest merchant</li>
             <li>Full map available</li>
           </ol>
           <p>
@@ -87,12 +87,18 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <a
+          href="https://github.com/morinted/valheim-trader-finder"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Source Code on Github
+        </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a
           href="https://jsfiddle.net/b7mjeuan/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          I just made this pretty website. Original trader finding code is from
-          this JSFiddle.
+          Adapted from this JSFiddle
         </a>
       </footer>
     </div>
