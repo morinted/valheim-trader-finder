@@ -16,7 +16,7 @@ export function WorldMap({ locations }) {
         // backgroundSize: 'auto'
       }}
     >
-      <MapIndicator size={2} color="white" x={0} y={0}>
+      <MapIndicator size={2} color="transparent" x={0} y={0}>
         +
       </MapIndicator>
       {locations.map(({ x, y }) => (
