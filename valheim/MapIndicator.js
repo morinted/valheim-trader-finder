@@ -7,6 +7,7 @@ export function MapIndicator({ x, y, size, color, children }) {
   const yPercentage = 100 - coordinateToPercentage(y)
   return (
     <div
+      title={`goto ${parseInt(x)},${parseInt(y)}`}
       style={{
         position: "absolute",
         top: `${yPercentage}%`,

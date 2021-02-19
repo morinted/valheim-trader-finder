@@ -2,8 +2,12 @@ import React from "react";
 import { MapIndicator } from "./MapIndicator";
 
 export function WorldMap({ locations }) {
-  console.log(locations);
   return (
+    <>
+    <p style={{
+      textAlign: 'center',
+      color: '#606060'
+    }}><em>Hover on a location for cheat teleport command.</em></p>
     <div
       style={{
         width: "100%",
@@ -12,8 +16,6 @@ export function WorldMap({ locations }) {
         borderRadius: "50%",
         overflow: "hidden",
         position: "relative",
-        // background: 'url(https://i.imgur.com/R7xPHaY.png)',
-        // backgroundSize: 'auto'
       }}
     >
       <MapIndicator size={2} color="transparent" x={0} y={0}>
@@ -23,5 +25,6 @@ export function WorldMap({ locations }) {
         <MapIndicator key={`${x},${y}`} size={10} x={x} y={y} color="#252525" />
       ))}
     </div>
+    </>
   );
 }
