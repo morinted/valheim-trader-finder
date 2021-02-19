@@ -12,12 +12,12 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Valheim Trader Finder</title>
+        <title>Valheim Merchant Finder</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Valheim Trader Finder</h1>
+        <h1 className={styles.title}>Valheim Merchant Finder</h1>
 
         <div className={styles.description}>
           <p>
