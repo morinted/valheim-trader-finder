@@ -1,7 +1,12 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import { useState } from "react";
+import styles from "../styles/Home.module.css";
+import { Dropzone } from "../valheim/Dropzone";
+import { Map, WorldMap } from "../valheim/WorldMap";
 
 export default function Home() {
+  const [locations, setLocations] = useState([]);
+  const [worldName, setWorldName] = useState("");
   return (
     <div className={styles.container}>
       <Head>
@@ -10,56 +15,42 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1 className={styles.title}>Valheim Trader Finder</h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div className={styles.description}>
+          <p>Provide your world database to locate traders.</p>
+          <p>
+            It can be found in{" "}
+            <code>%userprofile%\AppData\LocalLow\IronGate\Valheim\worlds</code>
+          </p>
+          <Dropzone
+            onLocationsFound={([worldName, locations]) => {
+              setLocations(locations);
+              setWorldName(worldName);
+            }}
+          />
         </div>
+
+        {worldName && (
+          <div className={styles.description}>
+            <p>I've heard rumors of traders in {worldName}…</p>
+            <WorldMap locations={locations} />
+
+          </div>
+
+        )}
       </main>
 
       <footer className={styles.footer}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://jsfiddle.net/b7mjeuan/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+          I just made this pretty website. Original trader finding code is from
+          this JSFiddle.
         </a>
       </footer>
     </div>
-  )
+  );
 }
