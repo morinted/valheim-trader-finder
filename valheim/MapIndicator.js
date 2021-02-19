@@ -17,7 +17,8 @@ export function MapIndicator({ x, y, size, color, children }) {
         lineHeight: 0,
         width: `${size}%`,
         height: `${size}%`,
-        background: color,
+        background: `radial-gradient(circle at center, ${color} 0, ${color} 5%, transparent 5%`,
+        border: `1px solid ${color}`,
         borderRadius: "50%",
       }}
     >
