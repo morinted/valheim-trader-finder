@@ -21,7 +21,9 @@ function findText(buf, pos, ascii) {
 }
 
 function getTraderLocations(name, buf, len) {
-  var searchForString = "Vendor_BlackForest";
+  //var searchForString = "Vendor_BlackForest";
+  var searchForString = "StoneCircle";
+  
   console.log(name, buf, len);
   var locations = [];
   // Vendor_Blackforest non-null-terminated is followed by its 32bit float x/z/y coordinates
