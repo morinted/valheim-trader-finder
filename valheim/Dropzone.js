@@ -21,10 +21,11 @@ function findText(buf, pos, ascii) {
 }
 
 function getTraderLocations(name, buf, len) {
+  var searchForString = "Vendor_BlackForest";
   console.log(name, buf, len);
   var locations = [];
   // Vendor_Blackforest non-null-terminated is followed by its 32bit float x/z/y coordinates
-  var offset = findText(buf, 0, "Vendor_BlackForest");
+  var offset = findText(buf, 0, searchForString);
   if (offset === -1) {
     return ["World file doesn't look right. Maybe the game changed?", []];
   }
@@ -44,7 +45,7 @@ function getTraderLocations(name, buf, len) {
         ")"
     );
     locations.push({ x: x, y: y, z: z });
-    offset = findText(buf, offset, "Vendor_BlackForest");
+    offset = findText(buf, offset, searchForString);
   }
   return [null, locations];
 }
