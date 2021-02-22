@@ -22,7 +22,7 @@ function findText(buf, pos, ascii) {
 
 function getTraderLocations(name, buf, len) {
   //var searchForString = "Vendor_BlackForest";
-  var searchForString = "GDKing";
+  var searchForString = "SunkenCrypt4";
   
   console.log(name, buf, len);
   var locations = [];
