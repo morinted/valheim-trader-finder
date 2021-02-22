@@ -11,6 +11,7 @@
     "next": "10.0.7",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-dropdown": "^1.9.2",
     "react-dropzone": "^11.3.1"
   }
 }

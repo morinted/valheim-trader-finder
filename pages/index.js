@@ -5,10 +5,32 @@ import { Dropzone } from "../valheim/Dropzone";
 import { Hint } from "../valheim/Hint";
 import { Map, WorldMap } from "../valheim/WorldMap";
 
+// Drop down component
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+
 export default function Home() {
   const [locations, setLocations] = useState([]);
   const [worldName, setWorldName] = useState("");
   const [showMap, setShowMap] = useState(false);
+  const [searchCriteria, setSearchCriteria] = useState("Vendor_BlackForest");
+
+  const searchCriteriaOptions = [
+    "Vendor_BlackForest",
+    "StartTemple",
+    "Eikthyrnir",
+    "GDKing",
+    "Dolmen01",
+    "Dolmen02",
+    "Dolmen03",
+    "SunkenCrypt4"
+  ]
+
+  const onSelect = (opt) => {
+    // get value and set new search criteria on change
+    setSearchCriteria(opt["value"]);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -36,7 +58,9 @@ export default function Home() {
               %userprofile%\AppData\LocalLow\IronGate\Valheim\worlds
             </code>
           </p>
+          <Dropdown options={searchCriteriaOptions} onSelect={(opt) => {onSelect(opt)}} onChange={(opt) => {onSelect(opt)}} value={searchCriteria} placeholder="Select a search criteria" disabled={worldName && true} />
           <Dropzone
+            searchCriteria={searchCriteria}
             onLocationsFound={([worldName, locations]) => {
               setLocations(locations);
               setWorldName(worldName);
