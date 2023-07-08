@@ -6,8 +6,9 @@ Find Haldor the merchant and Hildir the quest giver without all the stress.
 
 - Go to http://valheim-trader-finder.vercel.app/
 - Upload your world.db
-- Get RPG-friendly instructions to the nearest trader from spawn
+- Get RPG-friendly instructions to the nearest traders from spawn
 - Or, if you want, see a full map of all traders
+- on map Hildir and Haldor pins differs in color
 
 ## Development
 
