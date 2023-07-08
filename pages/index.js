@@ -6,23 +6,24 @@ import { Hint } from "../valheim/Hint";
 import { Map, WorldMap } from "../valheim/WorldMap";
 
 export default function Home() {
-  const [locations, setLocations] = useState([]);
+  const [locationsHaldor, setLocationsHaldor] = useState([]);
+  const [locationsHildir, setLocationsHildir] = useState([]);
   const [worldName, setWorldName] = useState("");
   const [showMap, setShowMap] = useState(false);
   return (
     <div className={styles.container}>
       <Head>
-        <title>Valheim Merchant Finder</title>
+        <title>Valheim Haldor&Hildir Finder</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Valheim Merchant Finder</h1>
+        <h1 className={styles.title}>Valheim Haldor&Hildir Finder</h1>
 
         <div className={styles.description}>
           <p>
             Provide your world database if you're having trouble locating
-            Haldor, the vendor of fine goods.
+            Haldor, the vendor of fine goods, and Hildir, the quest giver.
           </p>
           <ol className={styles.ol}>
             <li>Data stays offline</li>
@@ -30,15 +31,23 @@ export default function Home() {
             <li>Full map available</li>
           </ol>
           <p>
-            Your world can be found in:
+            Your local worlds can be found in:
             <br />
             <code className={styles.code}>
               %userprofile%\AppData\LocalLow\IronGate\Valheim\worlds
             </code>
           </p>
+          <p>
+            Your cloudsaved worlds can be found in steam installation folder:
+            <br />
+            <code className={styles.code}>
+              C:\Program Files (x86)\Steam\userdata\YOURNUMERICSTEAMID\892970\remote\worlds
+            </code>
+          </p>
           <Dropzone
-            onLocationsFound={([worldName, locations]) => {
-              setLocations(locations);
+            onLocationsFound={([worldName, locationsHaldor, locationsHildir]) => {
+              setLocationsHaldor(locationsHaldor);
+              setLocationsHildir(locationsHildir);
               setWorldName(worldName);
             }}
           />
@@ -47,8 +56,11 @@ export default function Home() {
         {worldName && (
           <div className={styles.description}>
             <p>I've heard rumors of traders in {worldName}…</p>
-            <p>
-              <Hint locations={locations} />
+            <p style={{ color: '#965317' }}>
+              <Hint locations={locationsHaldor} name="Haldor"/>
+            </p>
+            <p style={{ color: '#000078' }}>
+              <Hint locations={locationsHildir} name="Hildir"/>
             </p>
             {showMap ? (
               <p>
@@ -80,7 +92,7 @@ export default function Home() {
 
         {showMap && (
           <div className={styles.map}>
-            <WorldMap locations={locations} />
+            <WorldMap locationsHaldor={locationsHaldor} locationsHildir={locationsHildir}/>
           </div>
         )}
       </main>

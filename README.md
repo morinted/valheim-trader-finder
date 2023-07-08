@@ -1,6 +1,6 @@
 # Valheim Trader Finder
 
-Find Haldor the merchant without all the stress.
+Find Haldor the merchant and Hildir the quest giver without all the stress.
 
 ## Instructions
 

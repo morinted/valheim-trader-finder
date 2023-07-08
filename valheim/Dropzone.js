@@ -4,13 +4,13 @@ import { useDropzone } from "react-dropzone";
 // get offset of bytes after occurrence of 'ascii' that occurs at/after 'pos' in 'buf'
 function findText(buf, pos, ascii) {
   // grab a uint8array of the ascii string to find
-  var encoder = new TextEncoder();
-  var findview = encoder.encode(ascii);
-  var endsz = buf.byteLength - findview.byteLength;
-  console.log("Searching " + endsz + " bytes starting from " + pos);
+  let encoder = new TextEncoder();
+  let findview = encoder.encode(ascii);
+  let endsz = buf.byteLength - findview.byteLength;
+  console.log("Searching " + endsz + " bytes starting from " + pos + " looking for " + ascii);
   // return the first occurrence
-  for (var iter_buf = pos; iter_buf != endsz; iter_buf++) {
-    for (var iter_find = 0; iter_find != findview.byteLength; iter_find++) {
+  for (let iter_buf = pos; iter_buf != endsz; iter_buf++) {
+    for (let iter_find = 0; iter_find != findview.byteLength; iter_find++) {
       if (findview[iter_find] != buf[iter_buf + iter_find]) break;
       if (iter_find == findview.byteLength - 1)
         return iter_buf + findview.byteLength;
@@ -20,22 +20,22 @@ function findText(buf, pos, ascii) {
   return -1;
 }
 
-function getTraderLocations(name, buf, len) {
+function getVendorLocations(name, buf, len, vendor_id, vendor_name) {
   console.log(name, buf, len);
-  var locations = [];
-  // Vendor_Blackforest non-null-terminated is followed by its 32bit float x/z/y coordinates
-  var offset = findText(buf, 0, "Vendor_BlackForest");
+  let locations = [];
+  // Vendor_Blackforest and Hildir_camp non-null-terminated is followed by its 32bit float x/z/y coordinates
+  let offset = findText(buf, 0, vendor_id);
   if (offset === -1) {
-    return ["World file doesn't look right. Maybe the game changed?", []];
+    return [vendor_name + "'s not found.", locations];
   }
   while (offset !== -1) {
-    var coordview = new DataView(buf.buffer, offset);
+    let coordview = new DataView(buf.buffer, offset);
     // little endian floats
-    var x = coordview.getFloat32(0, true);
-    var z = coordview.getFloat32(4, true);
-    var y = coordview.getFloat32(8, true);
+    let x = coordview.getFloat32(0, true);
+    let z = coordview.getFloat32(4, true);
+    let y = coordview.getFloat32(8, true);
     console.log(
-      "found trader: (" +
+      "found "+vendor_name+": (" +
         x.toFixed(4) +
         "," +
         y.toFixed(4) +
@@ -44,9 +44,17 @@ function getTraderLocations(name, buf, len) {
         ")"
     );
     locations.push({ x: x, y: y, z: z });
-    offset = findText(buf, offset, "Vendor_BlackForest");
+    offset = findText(buf, offset, vendor_id);
   }
   return [null, locations];
+}
+
+function getTraderLocations(name, buf, len) {
+  return getVendorLocations(name, buf, len, "Vendor_BlackForest", "Haldor");
+}
+
+function getHildirLocations(name, buf, len) {
+  return getVendorLocations(name, buf, len, "Hildir_camp", "Hildir");
 }
 
 export function Dropzone({ onLocationsFound }) {
@@ -60,16 +68,21 @@ export function Dropzone({ onLocationsFound }) {
     }
     const reader = new FileReader();
     reader.onload = function (e) {
-      const [error, locations] = getTraderLocations(
+      const [errorHaldor, locationsHaldor] = getTraderLocations(
         worldFile.name,
         new Uint8Array(reader.result),
         reader.result.byteLength
       );
-      if (error) {
-        setError(error);
+      const [errorHildir, locationsHildir] = getHildirLocations(
+        worldFile.name,
+        new Uint8Array(reader.result),
+        reader.result.byteLength
+      );
+      if (errorHaldor && errorHildir) {
+        setError(errorHaldor + " " + errorHildir);
         return;
       }
-      onLocationsFound([worldFile.name.slice(0, -'.db'.length), locations]);
+      onLocationsFound([worldFile.name.slice(0, -'.db'.length), locationsHaldor, locationsHildir]);
     };
     reader.readAsArrayBuffer(worldFile);
     console.log(worldFile);
