@@ -11,7 +11,11 @@ const directions = [
   "Southeast",
 ];
 
-export function Hint({ locations }) {
+export function Hint({ locations, name }) {
+
+  if (!locations.length)
+    return `${name}'s not found`;
+
   const { distanceInteger, direction } = useMemo(() => {
     const [x1, y1] = [0, 0];
     return locations
@@ -35,7 +39,7 @@ export function Hint({ locations }) {
   if (distanceInteger === 0)
     return `You need not look far for a trader of great goods… just look to the ${direction}`;
 
-  return `There has been talk about a trader to the ${direction} of a great rock formation with iron hooks… about ${distanceInteger} kilometer${
+  return `There has been talk about ${name} to the ${direction} of a great rock formation with iron hooks… about ${distanceInteger} kilometer${
     distanceInteger === 1 ? "" : "s"
   } away.`;
 }
